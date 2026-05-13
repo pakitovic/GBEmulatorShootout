@@ -21,7 +21,7 @@ def _is_windows_x86_64_asset(name):
 
 class GbCycle(Emulator):
     def __init__(self):
-        super().__init__("gb-cycle", "https://github.com/pakitovic/gb-cycle", startup_time=1.0, features=(PCM,))
+        super().__init__("gb-cycle", "https://github.com/pakitovic/gb-cycle", startup_time=3.0, features=(PCM,))
         self.title_check = lambda title: title.startswith("gb-desktop |")
         self.executable = None
 
@@ -57,7 +57,7 @@ class GbCycle(Emulator):
             self.executable,
             os.path.abspath(rom),
             "--model", model,
-            "--startup", "skip-boot",
+            "--startup", "custom-boot",
             "--mode", "permissive",
             "--scale", "1",
             "--mute",
