@@ -1,7 +1,6 @@
 from util import *
 from emulator import Emulator
 from test import *
-import shutil
 import os
 
 
@@ -21,7 +20,7 @@ def _is_windows_x86_64_asset(name):
 
 class GbCycle(Emulator):
     def __init__(self):
-        super().__init__("gb-cycle", "https://github.com/pakitovic/gb-cycle", startup_time=3.0, features=(PCM,))
+        super().__init__("gb-cycle", "https://github.com/pakitovic/gb-cycle", startup_time=8.0, features=(PCM,))
         self.title_check = lambda title: title.startswith("gb-desktop |")
         self.executable = None
 
@@ -35,8 +34,6 @@ class GbCycle(Emulator):
         extract("downloads/gb-cycle.zip", "emu/gb-cycle")
         self.executable = os.path.abspath(self._find_executable())
         setDPIScaling(self.executable)
-        settings_source = os.path.join(os.path.dirname(__file__), "gbcycle-desktop-settings.toml")
-        shutil.copyfile(settings_source, "emu/gb-cycle/desktop-settings.toml")
 
     def _find_executable(self):
         for root, _dirs, files in os.walk("emu/gb-cycle"):
@@ -45,18 +42,17 @@ class GbCycle(Emulator):
         raise RuntimeError("Could not find gb-desktop.exe in gb-cycle release archive")
 
     def startProcess(self, rom, *, model, required_features):
-        model = {DMG: "game-boy", CGB: "color"}.get(model)
+        model = {DMG: "DMG", CGB: "CGB"}.get(model)
         if model is None:
             return None
 
         env = os.environ.copy()
         env["SDL_RENDER_DRIVER"] = "software"
-        env["GB_CYCLE_DESKTOP_SETTINGS_PATH"] = os.path.abspath("emu/gb-cycle/desktop-settings.toml")
-
         return subprocess.Popen([
             self.executable,
             os.path.abspath(rom),
             "--model", model,
+            "--palette", "grey",
             "--startup", "custom-boot",
             "--mode", "permissive",
             "--scale", "1",
