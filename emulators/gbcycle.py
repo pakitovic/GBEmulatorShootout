@@ -1,6 +1,7 @@
 from util import *
 from emulator import Emulator
 from test import *
+import shutil
 import os
 
 
@@ -34,6 +35,8 @@ class GbCycle(Emulator):
         extract("downloads/gb-cycle.zip", "emu/gb-cycle")
         self.executable = os.path.abspath(self._find_executable())
         setDPIScaling(self.executable)
+        settings_source = os.path.join(os.path.dirname(__file__), "gbcycle-desktop-settings.toml")
+        shutil.copyfile(settings_source, "emu/gb-cycle/desktop-settings.toml")
 
     def _find_executable(self):
         for root, _dirs, files in os.walk("emu/gb-cycle"):
@@ -55,7 +58,7 @@ class GbCycle(Emulator):
             os.path.abspath(rom),
             "--model", model,
             "--startup", "skip-boot",
-            "--mode", "strict",
+            "--mode", "permissive",
             "--scale", "1",
             "--mute",
             "--no-saves",
