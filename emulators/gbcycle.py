@@ -52,8 +52,6 @@ class GbCycle(Emulator):
             self.executable,
             os.path.abspath(rom),
             "--model", model,
-            "--palette", "grey",
             "--startup", "custom-boot",
-            "--mode", "permissive",
             "--test-runner",
         ], cwd=os.path.dirname(self.executable), env=env)
