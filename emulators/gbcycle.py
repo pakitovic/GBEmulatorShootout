@@ -42,7 +42,7 @@ class GbCycle(Emulator):
         raise RuntimeError("Could not find gb-desktop.exe in gb-cycle release archive")
 
     def startProcess(self, rom, *, model, required_features):
-        model = {DMG: "DMG", CGB: "CGB"}.get(model)
+        model = {DMG: "DMG", CGB: "CGB", SGB: "SGB"}.get(model)
         if model is None:
             return None
 
