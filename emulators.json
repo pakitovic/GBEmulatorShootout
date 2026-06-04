@@ -67,6 +67,10 @@
     "file": "docboy.json",
     "url": "https://github.com/Docheinstein/docboy"
   },
+  "GSE": {
+    "file": "gse.json",
+    "url": "https://github.com/CasualPokePlayer/GSE"
+  },
   "gb-cycle": {
     "file": "gb-cycle.json",
     "url": "https://github.com/pakitovic/gb-cycle"
